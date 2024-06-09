@@ -1,0 +1,16 @@
+Automobil Audi A7 2016 GrandCoupe Quattro 5
+Automobil Audi A4 2016 Limuzina Prednji 5
+Automobil Mercedes-Benz E-Class 2020 Sedan RWD 4
+Automobil BMW 5Series 2018 Sedan AWD 4
+Automobil Toyota Camry 2019 Sedan FWD 4
+Automobil Tesla ModelS 2021 Sedan AWD 4
+Automobil Ford Mustang 2019 Coupe RWD 2
+Automobil Chevrolet Silverado1500 2020 Pickup Truck 4WD 4
+Automobil Honda Civic 2017 Sedan FWD 4
+Automobil Volkswagen Golf 2020 Hatchback FWD 4
+Automobil Subaru Outback 2018 Wagon AWD 5
+Automobil Jeep Wrangler 2021 SUV 4WD 4
+Automobil Lexus RX350 2019 SUV AWD 4
+Automobil Hyundai Sonata 2020 Sedan FWD 4
+Automobil Kia Telluride 2021 SUV AWD 8
+Kamion Mercedes-Benz Actros 2010 15000

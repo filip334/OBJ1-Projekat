@@ -1,0 +1,144 @@
+[
+{
+	"godina": "2016",
+	"karoserija": "Limuzina",
+	"marka": "Audi",
+	"model": "A4",
+	"pogon": "Prednji",
+	"vrata": "5",
+},
+
+{
+	"godina": "2016",
+	"karoserija": "GrandCoupe",
+	"marka": "Audi",
+	"model": "A7",
+	"pogon": "Quattro",
+	"vrata": "5",
+},
+
+{
+	"godina": "2018",
+	"karoserija": "Sedan",
+	"marka": "BMW",
+	"model": "5Series",
+	"pogon": "AWD",
+	"vrata": "4",
+},
+
+{
+	"godina": "2020",
+	"karoserija": "Pickup",
+	"marka": "Chevrolet",
+	"model": "Silverado1500",
+	"pogon": "Truck",
+	"vrata": "4",
+},
+
+{
+	"godina": "2019",
+	"karoserija": "Coupe",
+	"marka": "Ford",
+	"model": "Mustang",
+	"pogon": "RWD",
+	"vrata": "2",
+},
+
+{
+	"godina": "2017",
+	"karoserija": "Sedan",
+	"marka": "Honda",
+	"model": "Civic",
+	"pogon": "FWD",
+	"vrata": "4",
+},
+
+{
+	"godina": "2020",
+	"karoserija": "Sedan",
+	"marka": "Hyundai",
+	"model": "Sonata",
+	"pogon": "FWD",
+	"vrata": "4",
+},
+
+{
+	"godina": "2021",
+	"karoserija": "SUV",
+	"marka": "Jeep",
+	"model": "Wrangler",
+	"pogon": "4WD",
+	"vrata": "4",
+},
+
+{
+	"godina": "2021",
+	"karoserija": "SUV",
+	"marka": "Kia",
+	"model": "Telluride",
+	"pogon": "AWD",
+	"vrata": "8",
+},
+
+{
+	"godina": "2019",
+	"karoserija": "SUV",
+	"marka": "Lexus",
+	"model": "RX350",
+	"pogon": "AWD",
+	"vrata": "4",
+},
+
+{
+	"godina": "2020",
+	"karoserija": "Sedan",
+	"marka": "Mercedes-Benz",
+	"model": "E-Class",
+	"pogon": "RWD",
+	"vrata": "4",
+},
+
+{
+	"godina": "2010",
+	"marka": "Mercedes-Benz",
+	"model": "Actros",
+	"nosivost": "15000",
+},
+
+{
+	"godina": "2018",
+	"karoserija": "Wagon",
+	"marka": "Subaru",
+	"model": "Outback",
+	"pogon": "AWD",
+	"vrata": "5",
+},
+
+{
+	"godina": "2021",
+	"karoserija": "Sedan",
+	"marka": "Tesla",
+	"model": "ModelS",
+	"pogon": "AWD",
+	"vrata": "4",
+},
+
+{
+	"godina": "2019",
+	"karoserija": "Sedan",
+	"marka": "Toyota",
+	"model": "Camry",
+	"pogon": "FWD",
+	"vrata": "4",
+},
+
+{
+	"godina": "2020",
+	"karoserija": "Hatchback",
+	"marka": "Volkswagen",
+	"model": "Golf",
+	"pogon": "FWD",
+	"vrata": "4",
+},
+
+]
