@@ -15,9 +15,9 @@ public:
 		: marka(m), model(mo), godinaProizvodnje(g) {
 		brojProizvedenihVozila++;
 	}
-	virtual ~Vozilo() = default;
-
-	virtual std::map<std::string, std::string> toMap() const = 0;
+	virtual ~Vozilo() {
+		brojProizvedenihVozila--;
+	}
 
 	virtual string informacijeVozila() const {
 		return marka + "//Model: " + model + "//Godina: " + to_string(godinaProizvodnje);

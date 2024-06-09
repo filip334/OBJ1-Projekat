@@ -20,7 +20,7 @@ int Vozilo::brojProizvedenihVozila = 0;
 	return out;
 }*/
 template <typename T>
-void upisUDatoteku(vector<T> vektor, const string& imeFajla) {
+void upisiVektorUDatoteku(vector<T> vektor, const string& imeFajla) {
 	ofstream outFile(imeFajla, ios::app);
 	if (!outFile) {
 		cerr << "Greska u otvaranju datoteke " << imeFajla << endl;
@@ -31,24 +31,21 @@ void upisUDatoteku(vector<T> vektor, const string& imeFajla) {
 	}
 }
 template <typename T>
-void upisObjektaUDatoteku(const T& objekat, const string& imeFajla) {
+void upisiObjekatUDatoteku(const T& objekat, const string& imeFajla) {
 	ofstream outFile(imeFajla, ios::app);
 	if (!outFile) {
-		cout << "Greska u otvaranju datoteke " << imeFajla << endl;
+		cout << "Greska u otvaranju datoteke(" << imeFajla << ")" << endl;
 		return;
 	}
 	//cout << "UPISANO :: " << objekat << endl;
 	outFile << objekat << endl;
 	if (outFile.fail()) {
-		std::cerr << "Error writing to file: " << imeFajla << endl;
+		std::cerr << "Greska u upisu(" << imeFajla << ")" << endl;
 	}
 	else {
-		std::cout << "Successfully wrote to file: " << imeFajla << endl;
+		std::cout << "Uspesno upisano u fajl(" << imeFajla << ")" << endl;
 	}
 	outFile.close();
-
-	filesystem::path filePath = std::filesystem::absolute(imeFajla);
-	cout << "Absolute path of the file: " << filePath << std::endl;
 }
 
 void ucitajVozila(const std::string& imeFajla, vector<Vozilo*>& fabrikaVozila) {
@@ -93,31 +90,11 @@ int porediVozila(const void* a, const void* b) {
 	// Uporedimo po marki
 	return voziloA->marka.compare(voziloB->marka);
 }
-void createTextFile(const std::vector<Vozilo*>& vozila, const std::string& filename) {
-	std::ofstream outputFile(filename);
-	if (outputFile.is_open()) {
-		outputFile << "[\n";
-		for (const auto& vozilo : vozila) {
-			map<string, string> voziloMap = vozilo->toMap();
-			outputFile << "{\n";
-			for (const auto& pair : voziloMap) {
-				outputFile << "\t\"" << pair.first << "\": \"" << pair.second << "\",\n";
-			}
-			outputFile << "},\n\n";
-		}
-		outputFile << "]";
-		outputFile.close();
 
-		std::cout << "Tekstualna datoteka '" << filename << "' je uspesno kreirana." << std::endl;
-	}
-	else {
-		std::cerr << "Nije moguce otvoriti datoteku za pisanje." << std::endl;
-	}
-}
 
 int main() {
 
-	//vector<Vozilo*> fabrikaVozila;
+	vector<Vozilo*> fabrikaVozila;
 
 	string komanda;
 	stack<Vozilo*> stackVozila;
@@ -133,6 +110,8 @@ int main() {
 		{ "upisStek", 5 },
 		{ "upisQueue", 6 },
 		{ "upisDatoteka", 7 },
+		{ "ispisiVektor", 12},
+		{ "sortirajVektor", 13},
 		{ "prikaz", 8 },
 		{ "brisanje", 9 },
 		{ "pomoc", 10 },
@@ -182,49 +161,48 @@ int main() {
 		}
 		case 3: //ispis Stack
 			if (stackVozila.empty()) {
-				std::cout << "Stek je prazan." << std::endl;
+				cout << "Stek je prazan." << endl;
 			}
 			else {
-				std::stack<Vozilo*> tempStack = stackVozila;
-				while (!tempStack.empty()) {
-					tempStack.top()->informacijeVozila();
-					tempStack.pop();
+				stack<Vozilo*> pomocniStek = stackVozila;
+				while (!pomocniStek.empty()) {
+					cout << pomocniStek.top()->informacijeVozila() << endl;
+					pomocniStek.pop();
 				}
 			}
 			break;
 		case 4://ispis Queue
 			if (queueVozila.empty()) {
-				std::cout << "Queue je prazan." << std::endl;
+				cout << "Queue je prazan." << endl;
 			}
 			else {
-				std::queue<Vozilo*> tempQueue = queueVozila;
-				while (!tempQueue.empty()) {
-					tempQueue.front()->informacijeVozila();
-					tempQueue.pop();
+				queue<Vozilo*> pomocniQueue = queueVozila;
+				while (!pomocniQueue.empty()) {
+					cout << pomocniQueue.front()->informacijeVozila() << endl;
+					pomocniQueue.pop();
 				}
 			}
 			break;
 		case 5: //upis Stack
 			if (vozilo) {
 				stackVozila.push(vozilo);
-				vozilo = nullptr;
-				std::cout << "Vozilo je upisano u stek." << std::endl;
+				cout << "Vozilo je upisano u stek." << endl;
 			}
 			else {
-				std::cout << "Nema trenutnog vozila za upis u stek." << std::endl;
+				cout << "Nema trenutnog vozila za upis u stek." << endl;
 			}
 			break;
 		case 6: //upis Queue
 			if (vozilo) {
 				queueVozila.push(vozilo);
-				vozilo = nullptr;
-				std::cout << "Vozilo je upisano u queue." << std::endl;
+				cout << "Vozilo je upisano u queue." << endl;
 			}
 			else {
-				std::cout << "Nema trenutnog vozila za upis u queue." << std::endl;
+				cout << "Nema trenutnog vozila za upis u queue." << endl;
 			}
 			break;
 		case 7:
+			upisiObjekatUDatoteku(vozilo, "voziloCitajVozila.txt");
 			break;
 		case 8:
 			cout << "--Trenutno vozilo--\n";
@@ -242,22 +220,40 @@ int main() {
 			break;
 		case 10:
 			cout << "Komande:\n"
-				<< "unosA - Unos Automobila\n"
-				<< "unosK - Unos Kamiona\n"
-				<< "prikaz - Prikazuje trenutni objekat\n"
-				<< "pomoc - Pomoc\n"
-				<< "ispisStek - Ispis steka\n"
-				<< "ispisQueue - Ispis queue\n"
-				<< "upisStek - Upisuje trenutni objekat u stek\n"
-				<< "upisQueue - Upisuje trenutni objekat u queue\n"
-				<< "brisanje - Brise trenutni objekat\n"
-				<< "izlaz - Kraj programa\n";
+				<< "1/unosA - Unos Automobila\n"
+				<< "2/unosK - Unos Kamiona\n"
+				<< "8/prikaz - Prikazuje trenutni objekat\n"
+				<< "10/pomoc - Pomoc\n"
+				<< "3/ispisStek - Ispis steka\n"
+				<< "4/ispisQueue - Ispis queue\n"
+				<< "5/upisStek - Upisuje trenutni objekat u stek\n"
+				<< "6/upisQueue - Upisuje trenutni objekat u queue\n"
+				<< "7/upisDatoteka - Upisuje trenutni objekat u datoteku\n"
+				<< "12/ispisiVektor - Cita iz datoteke,smesta objekete u Vektor i ispisuje ih\n"
+				<< "13/sortirajVektor - Sortira vektor ako je ucitan iz datoteke koristeci qsort i ispisuje sortiran vektor\n"
+				<< "9/brisanje - Brise trenutni objekat\n"
+				<< "11/izlaz - Kraj programa\n";
 			break;
 		case 11:
-
 			delete vozilo;
 			return 0;
-
+		case 12:
+			ucitajVozila("voziloCitajVozila.txt", fabrikaVozila);
+			for (const auto& vozila : fabrikaVozila) {
+				cout << *vozila << endl;
+			}
+			break;
+		case 13:
+			if (!fabrikaVozila.empty()) {
+				qsort(&fabrikaVozila[0], fabrikaVozila.size(), sizeof(Vozilo*), porediVozila);
+				cout << "--Sortirani vektor--" << endl;
+				for (const auto& vozila : fabrikaVozila) {
+					cout << *vozila << endl;
+				}
+			}
+			else {
+				cout << "Vektor je prazan iskoristite ispisiVektor da bi napunili vektor podacima" << endl;
+			}
 		default:
 			cout << "Nepoznata komanda." << endl;
 		}
@@ -266,17 +262,5 @@ int main() {
 	return 0;
 }
 
-
-
-/*Automobil make_unique a("Audi", "A4", 2016, "Limuzina", "Prednji", 5);
->>>>>>> Stashed changes
-	Kamion k("Mercedes", "Actros", 2010, 15000);
-	fabrikaVozila.push_back(new Automobil("Audi", "A4", 2016, "Limuzina", "Prednji", 5));
-	fabrikaVozila.push_back(new Kamion("Mercedes", "Actros", 2010, 15000));
-
-	//cout << a.informacijeVozila() << endl;
-	//fabrikaVozila.push_back(a);
-	//cout << k.informacijeVozila() << endl;
-	//fabrikaVozila.push_back(k);*/
 
 
