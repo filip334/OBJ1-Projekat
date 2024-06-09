@@ -119,6 +119,7 @@ int main() {
 	vector<Vozilo*> fabrikaVozila;
 	stack<Vozilo*> automobili;
 	queue<Vozilo*> kamioni;
+	bool program = true;
 	/*Automobil make_unique a("Audi", "A4", 2016, "Limuzina", "Prednji", 5);
 	Kamion k("Mercedes", "Actros", 2010, 15000);
 	fabrikaVozila.push_back(new Automobil("Audi", "A4", 2016, "Limuzina", "Prednji", 5));
@@ -128,53 +129,108 @@ int main() {
 	//fabrikaVozila.push_back(a);
 	//cout << k.informacijeVozila() << endl;
 	//fabrikaVozila.push_back(k);*/
+	while (program) {
+		char komanda;
+		cout << "Komanda (unsei p za pomoc):  "; cin >> komanda; fflush(stdin);
+		switch (komanda)
+		{
+		case 'p': 
+			cout << "\n\nKomanda:\nu - Unos objekta\np - Pomoc\ni - Ispis svih objekata\ns - Ispis iz steka\nq - Ispis iz queue\nk - Kraj programa\n\n"; 
+			break;
 
-	cout << "\n\nBroj proizvedenih vozila je: " << Vozilo::GetBrojProizvedenihVozila() << "\n\n";
+		case 'u':
+			char objekat;
+			cout << "--Unos objekata--"; 
+			do{
+				cout << "Izaberi objekat za unos\na - Za automobil\nk - Za kamion\np - Za prekid unosa"; cin >> objekat; fflush(stdin);
+				if (objekat != 'p' || objekat != 'a' || objekat != 'k') {
+					cout << "--NEISPRAVAN UNOS!!--";
+				}
+			} while (objekat != 'p' && objekat != 'a' && objekat != 'k');
+			
+			if (objekat == 'a') {
+				string marka, model, pogon, tip;
+				int godina, brojVrata;
+				cout << "--Unos automobila--\nMarka:";
+				cin >> marka; 
+				cout << "Model:"; cin >> model; fflush(stdin);
+				cout << "Pogon:"; cin >> pogon; fflush(stdin);
+				cout << "Tip(Limuzina,Hecbek,Karavan,...):"; cin >> tip; fflush(stdin);
+				cout << "Godina:"; cin >> godina;
+				cout << "Broj vrata"; cin >> brojVrata;
+				Automobil* a = new Automobil(marka, model, godina, tip, pogon, brojVrata);
+			}
+			else if (objekat == 'k') {
+				string marka, model;
+				int godina, nosivost;
+				cout << "--Unos kamiona--\nMarka:";
+				cin >> marka; fflush(stdin);
+				cout << "Model:"; cin >> model; fflush(stdin);
+				cout << "Godina:"; cin >> godina; 
+				cout << "Nosivost:"; cin >> nosivost;
+				Kamion* k = new Kamion(marka, model,godina,nosivost);
+			}
+			else {
+				cout << "OTKAZUJEM...";
+			}
+			break;
 
-	ucitajVozila("voziloCitajVozila.txt", fabrikaVozila);
-	cout << "===========================================================\n";
-	for (const auto& vozila : fabrikaVozila) {
-		cout << *vozila << endl;
-		if (dynamic_cast<Automobil*>(vozila)) {
-			automobili.push(vozila);
-			cout << "1";
+		case 'k': 
+
+			program = false; 
+			return 0;
+
+		default:
+			break;
 		}
-		else if (dynamic_cast<Kamion*>(vozila)) {
-			kamioni.push(vozila);
-			cout << "2";
+	}
+	/*cout << "\n\nBroj proizvedenih vozila je: " << Vozilo::GetBrojProizvedenihVozila() << "\n\n";
+
+		ucitajVozila("voziloCitajVozila.txt", fabrikaVozila);
+		cout << "===========================================================\n";
+		for (const auto& vozila : fabrikaVozila) {
+			cout << *vozila << endl;
+			if (dynamic_cast<Automobil*>(vozila)) {
+				automobili.push(vozila);
+				cout << "1";
+			}
+			else if (dynamic_cast<Kamion*>(vozila)) {
+				kamioni.push(vozila);
+				cout << "2";
+			}
+
 		}
-		
-	}
-	cout << "===========================================================\n";
-	cout << "\nBroj proizvedenih vozila je: " << Vozilo::GetBrojProizvedenihVozila() << "\n\n";
+		cout << "===========================================================\n";
+		cout << "\nBroj proizvedenih vozila je: " << Vozilo::GetBrojProizvedenihVozila() << "\n\n";
 
-	if (!fabrikaVozila.empty()) {
-		qsort(&fabrikaVozila[0], fabrikaVozila.size(), sizeof(Vozilo*), porediVozila);
-	}
-	cout << "====================Sortirano po modelu====================\n";
-	for (const auto& vozila : fabrikaVozila) {
-		cout << *vozila << endl;
-	}
-	cout << "===========================================================\n";
-	createTextFile(fabrikaVozila, "json.txt");
-	cout << "Stack contents:" << endl;
-	
-	while (!automobili.empty()) {
-		Vozilo* v = automobili.top();
-		cout << *v << endl;
-		automobili.pop();
-	}
+		if (!fabrikaVozila.empty()) {
+			qsort(&fabrikaVozila[0], fabrikaVozila.size(), sizeof(Vozilo*), porediVozila);
+		}
+		cout << "====================Sortirano po modelu====================\n";
+		for (const auto& vozila : fabrikaVozila) {
+			cout << *vozila << endl;
+		}
+		cout << "===========================================================\n";
+		createTextFile(fabrikaVozila, "json.txt");
+		cout << "Stack contents:" << endl;
 
-	// Demonstrating queue usage
-	cout << "Queue contents:" << endl;
-	while (!kamioni.empty()) {
-		Vozilo* v = kamioni.front();
-		cout << *v << endl;
-		kamioni.pop();
-	}
+		while (!automobili.empty()) {
+			Vozilo* v = automobili.top();
+			cout << *v << endl;
+			automobili.pop();
+		}
+
+		// Demonstrating queue usage
+		cout << "Queue contents:" << endl;
+		while (!kamioni.empty()) {
+			Vozilo* v = kamioni.front();
+			cout << *v << endl;
+			kamioni.pop();
+		}
 
 	for (auto v : fabrikaVozila) {
 		delete v;
 	}
+	return 0;*/
 	return 0;
 }
