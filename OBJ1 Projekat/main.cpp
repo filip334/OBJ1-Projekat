@@ -9,16 +9,14 @@
 #include <stack>
 #include <sstream>
 #include <filesystem>
+#include <cctype>
 #include "Vozilo.h"
 #include "Automobil.h"
 #include "Kamion.h"
 using namespace std;
 
 int Vozilo::brojProizvedenihVozila = 0;
-/*ostream& operator<<(ostream& out, const Vozilo vozilo) {
-	out << vozilo.informacijeVozila();
-	return out;
-}*/
+
 template <typename T>
 void upisiVektorUDatoteku(vector<T> vektor, const string& imeFajla) {
 	ofstream outFile(imeFajla, ios::app);
@@ -38,7 +36,7 @@ void upisiObjekatUDatoteku(const T& objekat, const string& imeFajla) {
 		return;
 	}
 	//cout << "UPISANO :: " << objekat << endl;
-	outFile << objekat << endl;
+	outFile << *objekat << endl;
 	if (outFile.fail()) {
 		std::cerr << "Greska u upisu(" << imeFajla << ")" << endl;
 	}
@@ -90,6 +88,14 @@ int porediVozila(const void* a, const void* b) {
 	// Uporedimo po marki
 	return voziloA->marka.compare(voziloB->marka);
 }
+bool proveriBroj(const string& unos) {
+	for (char karakter : unos) {
+		if (!isdigit(karakter)) {
+			return false;
+		}
+	}
+	return true;
+}
 
 
 int main() {
@@ -115,6 +121,7 @@ int main() {
 		{ "prikaz", 8 },
 		{ "brisanje", 9 },
 		{ "pomoc", 10 },
+		{ "ocisti", 14 },
 		{ "izlaz", 11 }
 	};
 
@@ -131,14 +138,24 @@ int main() {
 		switch (izbor)
 		{
 		case 1: {
-			string marka, model, pogon, tip;
+			string marka, model, pogon, tip, brojUnos;
 			int godina, brojVrata;
 			cout << "--Unos automobila--\nMarka:"; cin >> marka;
 			cout << "Model:"; cin >> model; fflush(stdin);
 			cout << "Pogon:"; cin >> pogon; fflush(stdin);
 			cout << "Tip(Limuzina,Hecbek,Karavan,...):"; cin >> tip; fflush(stdin);
-			cout << "Godina:"; cin >> godina;
-			cout << "Broj vrata"; cin >> brojVrata;
+			cout << "Godina:"; cin >> brojUnos;
+			while (!proveriBroj(brojUnos)) {
+				cout << "Godina proizvodnje moze biti iskljucivo broj!!" << endl;
+				cout << "Godina:"; cin >> brojUnos;
+			}
+			godina = stoi(brojUnos);
+			cout << "Broj vrata:"; cin >> brojUnos;
+			while (!proveriBroj(brojUnos) ) {
+				cout << "Broj vrata moze biti iskljucivo broj!!" << endl;
+				cout << "Broj vrata:"; cin >> brojUnos;
+			}
+			brojVrata = stoi(brojUnos);
 			Automobil* a = new Automobil(marka, model, godina, tip, pogon, brojVrata);
 			cout << "\n--Uneto vozilo--\n";
 			cout << a->informacijeVozila() << endl;
@@ -146,13 +163,23 @@ int main() {
 			break;
 		}
 		case 2: {
-			string marka, model;
+			string marka, model, brojUnos;
 			int godina, nosivost;
 			cout << "--Unos kamiona--\nMarka:";
 			cin >> marka; fflush(stdin);
 			cout << "Model:"; cin >> model; fflush(stdin);
-			cout << "Godina:"; cin >> godina;
-			cout << "Nosivost:"; cin >> nosivost;
+			cout << "Godina:"; cin >> brojUnos;
+			while (!proveriBroj(brojUnos)) {
+				cout << "Godina proizvodnje moze biti iskljucivo broj!!" << endl;
+				cout << "Godina:"; cin >> brojUnos;
+			}
+			godina = stoi(brojUnos);
+			cout << "Nosivost:"; cin >> brojUnos;
+			while (!proveriBroj(brojUnos)) {
+				cout << "Nosivost moze biti iskljucivo broj!!" << endl;
+				cout << "Nosivost:"; cin >> brojUnos;
+			}
+			nosivost = stoi(brojUnos);
 			Kamion* k = new Kamion(marka, model, godina, nosivost);
 			cout << "\n--Uneto vozilo--\n";
 			cout << k->informacijeVozila() << endl;
@@ -166,7 +193,7 @@ int main() {
 			else {
 				stack<Vozilo*> pomocniStek = stackVozila;
 				while (!pomocniStek.empty()) {
-					cout << pomocniStek.top()->informacijeVozila() << endl;
+					cout << *pomocniStek.top() << endl;
 					pomocniStek.pop();
 				}
 			}
@@ -178,7 +205,7 @@ int main() {
 			else {
 				queue<Vozilo*> pomocniQueue = queueVozila;
 				while (!pomocniQueue.empty()) {
-					cout << pomocniQueue.front()->informacijeVozila() << endl;
+					cout << *pomocniQueue.front() << endl;
 					pomocniQueue.pop();
 				}
 			}
@@ -207,7 +234,7 @@ int main() {
 		case 8:
 			cout << "--Trenutno vozilo--\n";
 			if (vozilo) {
-				cout << vozilo->informacijeVozila() << endl;
+				cout << *vozilo << endl;
 			}
 			else {
 				cout << "Nema trenutnog vozila" << endl;
@@ -232,6 +259,7 @@ int main() {
 				<< "12/ispisiVektor - Cita iz datoteke,smesta objekete u Vektor i ispisuje ih\n"
 				<< "13/sortirajVektor - Sortira vektor ako je ucitan iz datoteke koristeci qsort i ispisuje sortiran vektor\n"
 				<< "9/brisanje - Brise trenutni objekat\n"
+				<< "14/ocisti - Cisti konzolu\n"
 				<< "11/izlaz - Kraj programa\n";
 			break;
 		case 11:
@@ -254,6 +282,10 @@ int main() {
 			else {
 				cout << "Vektor je prazan iskoristite ispisiVektor da bi napunili vektor podacima" << endl;
 			}
+			break;
+		case 14:
+			system("cls");
+			break;
 		default:
 			cout << "Nepoznata komanda." << endl;
 		}

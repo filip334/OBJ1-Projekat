@@ -14,3 +14,6 @@ Automobil Lexus RX350 2019 SUV AWD 4
 Automobil Hyundai Sonata 2020 Sedan FWD 4
 Automobil Kia Telluride 2021 SUV AWD 8
 Kamion Mercedes-Benz Actros 2010 15000
+
+Kamion Mercedes-Benz Actros 2000 3200
+Automobil Opel Corsa 2005 Hecbek Prednji 2

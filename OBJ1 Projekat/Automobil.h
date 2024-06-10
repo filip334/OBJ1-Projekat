@@ -17,7 +17,7 @@ public:
 	//virtual ~Automobil() = default;
 
 	string informacijeVozila() const override {
-		return "Automobil: " + Vozilo::informacijeVozila() + "//Tip: " + tipKaroserije + "//Pogon: " + pogon + "//Vrata: " + to_string(brojVrata);
+		return "Automobil " + Vozilo::informacijeVozila() + " " + tipKaroserije + " " + pogon + " " + to_string(brojVrata);
 	}
 	
 };

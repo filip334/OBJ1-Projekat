@@ -17,9 +17,8 @@ public:
 	//virtual ~Kamion() = default;
 
 	string informacijeVozila() const override {
-		return "Kamion: " + Vozilo::informacijeVozila() + "//Nosivost: " + to_string(nosivost) + "kg";
+		return "Kamion " + Vozilo::informacijeVozila() + " " + to_string(nosivost);
 	}
-	
 	
 };
 

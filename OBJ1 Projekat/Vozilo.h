@@ -20,15 +20,17 @@ public:
 	}
 
 	virtual string informacijeVozila() const {
-		return marka + "//Model: " + model + "//Godina: " + to_string(godinaProizvodnje);
+		return marka + " " + model + " " + to_string(godinaProizvodnje);
 	}
 
-	friend std::ostream& operator<<(std::ostream& os, const Vozilo& vozilo) {
-		os << vozilo.informacijeVozila();
-		return os;
+	friend ostream& operator<<(ostream& out, const Vozilo& vozilo) {
+		out << vozilo.informacijeVozila();
+		return out;
 	}
 
 	static int GetBrojProizvedenihVozila() { return brojProizvedenihVozila; }
+
+	void setGodinaProizvodnje(int godinaProizvodnje) { this->godinaProizvodnje = godinaProizvodnje; }
 
 	friend int porediVozila(const void*, const void*);
 };
